@@ -5,12 +5,12 @@
 import re
 
 
-# PFF
 def clean(dataset, source):
 	"""
 	sanitizes a given dataset by removing erroneous
 	or corrupted data
 	:param dataset: array of pandas.DataFrame objects
+	:param source: the website where the data comes from as a string
 	:return: None
 	"""
 
@@ -23,10 +23,13 @@ def clean(dataset, source):
 			df.drop(df[df.Att < 100].index, inplace=True)
 
 			# remove extra carets from player name
-			df.Player = [remove_carets(p) for p in df.Player]
+			# and only use last name
+			# to allow us to merge with FO data
+			df.Player = [standardize(p) for p in df.Player]
 	elif source is 'FO':
 		for df in dataset:
 			df.drop(columns=['Rk', 'Rk.1', 'Rk.2', 'Rk.3'], inplace=True)
+			df.Player = [p[2:] for p in df.Player]
 	elif source is 'ELO':
 		for df in dataset:
 			df.drop(df[(df.season < 2010) | (df.season >= 2019)].index, inplace=True)
@@ -34,5 +37,9 @@ def clean(dataset, source):
 	return dataset
 
 
-def remove_carets(player_name):
-	return re.sub('[*+]', '', player_name)
+# remove extraneous characters
+# and return the last name
+def standardize(player_name):
+	player_name = re.sub('[*+]', '', player_name)
+	return player_name.split(sep=' ')[1]
+
