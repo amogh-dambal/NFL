@@ -3,6 +3,7 @@
 # CSV data
 # supported functions include
 import re
+from util.script import run
 
 
 def clean(dataset, source):
@@ -37,6 +38,8 @@ def clean(dataset, source):
 	return dataset
 
 
+# fix a bug that appends an extra comma
+# to the cleaned CSV files
 def flush(dataset, source, path, extension):
 	"""
 	write a dataset to file system 
@@ -50,6 +53,7 @@ def flush(dataset, source, path, extension):
 		filename = path + f"{source}_" + str(yr) + extension
 		df.to_csv(filename)
 
+	run(script='clean.sh')
 
 # remove extraneous characters
 # and return the last name
