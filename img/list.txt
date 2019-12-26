@@ -1,0 +1,6 @@
+images to consider adding
+
+- nfl team logos
+- markers for plotting data
+- any others to make formatting 
+pyplot easier?
