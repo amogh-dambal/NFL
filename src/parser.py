@@ -14,8 +14,9 @@ from glob import iglob
 # with specified extension
 # and generate one dataframe for each year
 def parse(directory="../data/**", extension=".csv"):
+	path = directory + "**"
 	files = [
-		f for f in iglob(pathname=directory, recursive=True)
+		f for f in iglob(pathname=path, recursive=True)
 		if os.path.isfile(f) and f.endswith(extension)
 	]
 
@@ -26,7 +27,6 @@ def parse(directory="../data/**", extension=".csv"):
 		dfs.append(df)
 
 	return dfs
-
 
 
 

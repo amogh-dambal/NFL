@@ -140,5 +140,3 @@ def scrape(source, start=2010, end=2018, utype=None, adv=False):
 		elif source is 'FO':
 			get_fo_data(url)
 
-
-scrape(source='FO')
