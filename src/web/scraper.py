@@ -66,7 +66,7 @@ def get_fo_data(url):
 				row.append(col.text)
 			rows.append(row)
 
-		filename = get_filename(url)
+		filename = get_filename(source='FO', url=url)
 		with open(filename, "w") as f:
 			wr = csv.writer(f)
 			wr.writerow(header)
@@ -77,48 +77,68 @@ def get_fo_data(url):
 		print(f"Could not complete url request for url:{url}")
 
 
-def get_filename(url):
-	path = "../../data/"
+def get_filename(source, url):
 	extension = ".csv"
-	prefix = "years/"
 
-	if prefix in url:
-		index = url.find(prefix) + 6
-		fmt = url[index:index+4]
-	else:
-		fmt = url
+	if source is 'PFF':
+		path = "../../data/pff"
+		prefix = "years/"
+
+		if prefix in url:
+			index = url.find(prefix) + 6
+			fmt = url[index:index+4]
+		else:
+			fmt = url
+	elif source is 'FO':
+		path = "../../data/fo/"
+		fmt = "qb_" + url[-4:]
+
 	return path + fmt + extension
 
 
-def generate_urls(start=2010, end=2018, utype="passing", adv=False):
-	'''Specific function to generate urls to
+def generate_urls(source, start=2010, end=2018, utype=None, adv=False):
+	"""Specific function to generate urls to
 	PFF basic quarterback statistic tables
+	:param source: the website to pull the data from
 	:param start: the season to start looking for data
 	:param end: the season to end looking for data
 	:param utype: the type of table to look for ('passing', 'rushing', 'receiving')
 	:param adv: boolean flag that fetches advanced data
 	:return:
-	'''
+	"""
+
 	if start < 2000 or end > 2018 or end < start:
 		raise RuntimeError("Invalid parameters")
 
 	urls = []
-	dest = "http://pro-football-reference.com/years/"
-	if adv:
-		suffix = "/" + utype.lower() + "_advanced.htm"
-	else:
-		suffix = "/" + utype.lower() + ".htm"
+	if source is 'PFF':
+		if utype is None:
+			raise ValueError("utype cannot be none if source is PFF")
 
-	for year in range(start, end + 1):
-		urls.append(dest + str(year) + suffix)
+		dest = "http://pro-football-reference.com/years/"
+		if adv:
+			suffix = "/" + utype.lower() + "_advanced.htm"
+		else:
+			suffix = "/" + utype.lower() + ".htm"
+
+		for year in range(start, end + 1):
+			urls.append(dest + str(year) + suffix)
+	elif source is 'FO':
+		dest = 'https://www.footballoutsiders.com/stats/qb/'
+
+		for year in range(start, end + 1):
+			urls.append(dest + str(year))
 
 	return urls
 
 
-def scrape(urls, source):
+def scrape(source, start=2010, end=2018, utype=None, adv=False):
+	urls = generate_urls(source, start, end, utype, adv)
 	for url in urls:
 		if source is 'PFF':
 			get_pff_data(url)
 		elif source is 'FO':
 			get_fo_data(url)
 
+
+scrape(source='FO')
