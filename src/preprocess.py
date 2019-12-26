@@ -3,7 +3,6 @@
 # CSV data
 # supported functions include
 import re
-from util.script import run
 
 
 def clean(dataset, source):
@@ -29,7 +28,7 @@ def clean(dataset, source):
 			df.Player = [standardize(p) for p in df.Player]
 	elif source is 'FO':
 		for df, yr in dataset:
-			df.drop(columns=['Rk'], inplace=True)
+			df.drop(columns=df.filter(like='Rk'), inplace=True)
 			df.Player = [p[2:] for p in df.Player]
 	elif source is 'ELO':
 		for df, yr in dataset:
@@ -37,23 +36,6 @@ def clean(dataset, source):
 			df.fillna({'playoff': 'x'}, inplace=True)
 	return dataset
 
-
-# fix a bug that appends an extra comma
-# to the cleaned CSV files
-def flush(dataset, source, path, extension):
-	"""
-	write a dataset to file system 
-	:param dataset: array of tuples (DataFrame, int) to write
-	:param source: website data originates from
-	:param path: directory to write to
-	:param extension: type of file
-	:return: none
-	"""
-	for df, yr in dataset:
-		filename = path + f"{source}_" + str(yr) + extension
-		df.to_csv(filename)
-
-	run(script='clean.sh')
 
 # remove extraneous characters
 # and return the last name
