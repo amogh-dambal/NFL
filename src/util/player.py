@@ -1,7 +1,6 @@
 # python 3.6
 # utility class to store player information
 # and simplify computation
-import numpy as np
 
 
 class Player:

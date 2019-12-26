@@ -122,10 +122,3 @@ def scrape(urls, source):
 		elif source is 'FO':
 			get_fo_data(url)
 
-
-# PFF Reference
-# all_urls = generate_urls()
-# scrape(all_urls)
-
-# Football Outsiders
-fo_url = "https://www.footballoutsiders.com/stats/qb/2018"
