@@ -3,15 +3,14 @@
 # run the project
 
 from parser import parse
-from preprocess import clean
 
 
 def main():
-	pff_dfs = parse(directory="../../data/pff/")
-	fo_dfs = parse(directory="../../data/fo/")
+	pff_tuples = parse(directory="../data/pff/")
+	fo_tuples = parse(directory="../data/fo/")
 
-	clean(pff_dfs, 'PFF')
-	clean(fo_dfs, 'FO')
+	# TODO: add support to keep track of the year
+	# TODO: represented by the DataFrame
 
 	print('all clear.')
 

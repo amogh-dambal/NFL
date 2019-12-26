@@ -28,7 +28,7 @@ def clean(dataset, source):
 			df.Player = [standardize(p) for p in df.Player]
 	elif source is 'FO':
 		for df in dataset:
-			df.drop(columns=['Rk', 'Rk.1', 'Rk.2', 'Rk.3'], inplace=True)
+			df.drop(columns=['Rk'], inplace=True)
 			df.Player = [p[2:] for p in df.Player]
 	elif source is 'ELO':
 		for df in dataset:

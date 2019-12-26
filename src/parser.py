@@ -13,6 +13,7 @@ from glob import iglob
 # read from all files in specified directory
 # with specified extension
 # and generate one dataframe for each year
+# returns tuple (DataFrame, year)
 def parse(directory="../data/**", extension=".csv"):
 	path = directory + "**"
 	files = [
@@ -21,12 +22,12 @@ def parse(directory="../data/**", extension=".csv"):
 	]
 
 	# each year has a dataframe
-	dfs = []
+	dfs_years = []
 	for file in files:
 		df = pd.read_csv(file)
-		dfs.append(df)
+		dfs_years.append((df, file[-8:-4]))
 
-	return dfs
+	return dfs_years
 
 
 
