@@ -3,7 +3,7 @@
 # run the project
 
 from parser import parse
-from preprocess import clean, flush
+from preprocess import clean
 
 
 def main():
