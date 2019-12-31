@@ -11,7 +11,7 @@ def clean(dataset, source):
 	or corrupted data
 	:param dataset: array of tuples (pandas.DataFrame, int)
 	:param source: the website where the data comes from as a string
-	:return: None
+	:return: sanitized array of tuples: (pandas.DataFrame, int)
 	"""
 
 	if source is 'PFF':
@@ -37,6 +37,32 @@ def clean(dataset, source):
 			df.drop(df[(df.season < 2010) | (df.season >= 2019)].index, inplace=True)
 			df.fillna({'playoff': 'x'}, inplace=True)
 	return dataset
+
+
+def merge(f1, f2, index='Player'):
+	"""
+	combines two pandas.DataFrame objects into one
+	on the specified index ('Player') and sanitizes it
+	:param f1: tuple (pandas.DataFrame, year) object to call merge
+	:param f2: tuple (pandas.DataFrame, year) object to merge
+	:param index: string to merge on
+	:return: sanitized pandas.DataFrame object
+	"""
+
+	if int(f1[1]) != int(f2[1]):
+		raise ValueError("Merging datasets of different years!")
+
+	year = int(f1[1])
+	pff = f1[0]
+	fo = f2[0]
+
+	pff.rename({'Yds.1': 'SkYds'}, axis='columns', inplace=True)
+
+	joined = pff.join(other=fo.set_index(index), on=index, rsuffix='fo')
+	joined.dropna(inplace=True)
+	joined.drop(columns=[c for c in joined.columns if c.endswith('fo')] + ['Team', 'Yards'], inplace=True)
+
+	return joined, year
 
 
 # remove extraneous characters
