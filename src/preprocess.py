@@ -28,10 +28,12 @@ def clean(dataset, source):
 			df.Player = [standardize(p) for p in df.Player]
 	elif source is 'FO':
 		for df, yr in dataset:
+			df.dropna(inplace=True)
 			df.drop(columns=df.filter(like='Rk'), inplace=True)
 			df.Player = [p[2:] for p in df.Player]
 	elif source is 'ELO':
 		for df, yr in dataset:
+			df.dropna(inplace=True)
 			df.drop(df[(df.season < 2010) | (df.season >= 2019)].index, inplace=True)
 			df.fillna({'playoff': 'x'}, inplace=True)
 	return dataset
