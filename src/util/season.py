@@ -29,11 +29,8 @@ class Season:
 
 	def __str__(self):
 		return \
-			f"name: {self._name}\n" \
-			f"pos: {self._pos}\n" \
-			f"team: {self._team}\n" \
-			f"age: {self._age}\n" \
-			f"year: {self._year}\n"
+			f"{self._name}, {self._pos}, {self._year}\n" \
+			f"age: {self._age}, team: {self._team}\n"
 
 	def __repr__(self):
 		return \
@@ -45,7 +42,7 @@ class Season:
 
 	def __eq__(self, other):
 		return isinstance(other, type(self)) and \
-			self._name == other._name and self._year == other._year
+			(self._name, self._year) == (other._name, other._year)
 
 	def __hash__(self):
-		return hash(self._name, self._year)
+		return hash((self._name, self._year))
