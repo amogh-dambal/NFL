@@ -4,45 +4,47 @@
 
 
 class Season:
-	_name = ""
-	_pos = ""
-	_team = ""
-	_age = 0
-	_year = 0
+	# assign to default values
+	# check for these when using
+	name = ""
+	pos = ""
+	team = ""
+	age = 0
+	year = 0
 
 	def __init__(self, data=None, name="", pos="", team="", age=-1, yr=-1):
 		if data is None:
-			self._name = name
-			self._pos = pos
-			self._team = team
-			self._age = age
-			self._year = yr
+			self.name = name
+			self.pos = pos
+			self.team = team
+			self.age = age
+			self.year = yr
 		else:
 			if len(data) != 5:
 				raise ValueError("list parameter has incorrect number of arguments - expected 5")
 			else:
-				self._name = data[0]
-				self._team = data[1]
-				self._age = int(data[2])
-				self._pos = data[3]
-				self._yr = int(data[4])
+				self.name = data[0]
+				self.team = data[1]
+				self.age = int(data[2])
+				self.pos = data[3]
+				self.yr = int(data[4])
 
 	def __str__(self):
 		return \
-			f"{self._name}, {self._pos}, {self._year}\n" \
-			f"age: {self._age}, team: {self._team}\n"
+			f"{self.name}, {self.pos}, {self.year}\n" \
+			f"age: {self.age}, team: {self.team}\n"
 
 	def __repr__(self):
 		return \
-			f"name: {self._name}\n" \
-			f"pos: {self._pos}\n" \
-			f"team: {self._team}\n" \
-			f"age: {self._age}\n" \
-			f"year: {self._year}\n"
+			f"name: {self.name}\n" \
+			f"pos: {self.pos}\n" \
+			f"team: {self.team}\n" \
+			f"age: {self.age}\n" \
+			f"year: {self.year}\n"
 
 	def __eq__(self, other):
 		return isinstance(other, type(self)) and \
-			(self._name, self._year) == (other._name, other._year)
+			(self.name, self.year) == (other.name, other.year)
 
 	def __hash__(self):
-		return hash((self._name, self._year))
+		return hash((self.name, self.year))
