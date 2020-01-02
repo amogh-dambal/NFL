@@ -4,6 +4,8 @@
 # supported functions include
 import re
 
+from util.season import Season
+
 
 def clean(dataset, source):
 	"""
@@ -26,6 +28,9 @@ def clean(dataset, source):
 			# and only use last name
 			# to allow us to merge with FO data
 			df.Player = [standardize(p) for p in df.Player]
+
+			# rename column that represents sack yardage
+			df.rename({'Yds.1':'SkYds'}, axis='columns', inplace=True)
 	elif source is 'FO':
 		for df, yr in dataset:
 			df.dropna(inplace=True)
@@ -56,13 +61,24 @@ def merge(f1, f2, index='Player'):
 	pff = f1[0]
 	fo = f2[0]
 
-	pff.rename({'Yds.1': 'SkYds'}, axis='columns', inplace=True)
-
 	joined = pff.join(other=fo.set_index(index), on=index, rsuffix='fo')
 	joined.dropna(inplace=True)
 	joined.drop(columns=[c for c in joined.columns if c.endswith('fo')] + ['Team', 'Yards'], inplace=True)
 
 	return joined, year
+
+
+def build_seasons(database):
+	"""
+	generate a list of
+	:param database: full
+	:return: list of Season objects for all player seasons from 2010-2018
+	"""
+	all_seasons = []
+	for df, yr in database:
+		for row in df.iterrows():
+			all_seasons.append(Season(data=row[1], yr=yr, column_names=df.columns[4:]))
+	return all_seasons
 
 
 # remove extraneous characters
