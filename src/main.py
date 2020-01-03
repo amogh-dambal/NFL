@@ -4,8 +4,7 @@
 
 from parser import parse
 from preprocess import clean, merge, build_seasons
-
-import pprint
+from graph import extract, graph
 
 
 def main():
@@ -18,10 +17,16 @@ def main():
 		joined, yr = merge(pff, fo)
 		database.append((joined, yr))
 
+	# build individual season records
 	all_seasons = build_seasons(database=database)
 
-	pp = pprint.PrettyPrinter(indent=3)
-	pp.pprint(all_seasons)
+	# plot QB efficiency in 2018
+	x_label = 'DYAR'
+	y_label = 'DVOA'
+
+	X, Y = extract(x_label=x_label, y_label=y_label, seasons=all_seasons)
+
+	graph(x=X, y=Y, x_label=x_label, y_label=y_label)
 
 
 if __name__ == '__main__':

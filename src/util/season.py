@@ -35,6 +35,14 @@ class Season:
 					if label not in self.labeled_stats:
 						self.labeled_stats[label] = stat
 
+	def get_fv(self):
+		"""
+		returns the feature vector for this season
+		to be used in clustering algorithms
+		:return: list of floating point numbers that are selected features of a season
+		"""
+		return copy.deepcopy(self.raw_stats)
+
 	def __str__(self):
 		return f"{self.name}, {self.pos}/{self.team}, {self.year}\n" \
 			f"stats: {self.labeled_stats}\n"
