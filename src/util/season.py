@@ -32,7 +32,25 @@ class Season:
 				print("No labels provided - labeled stats will not be recorded")
 			else:
 				for label, stat in zip(column_names, player_stats):
-					if label not in self.labeled_stats:
+					# have to format data from string to fp
+					if isinstance(stat, str):
+						if ',' in stat:
+							stat = stat.replace(',', '')
+							self.labeled_stats[label] = float(stat)
+						elif '/' in stat:
+							ns = stat.split('/')
+							n = float(ns[0])
+							d = float(ns[1])
+							if n == 0:
+								self.labeled_stats[label] = 0
+							else:
+								self.labeled_stats[label] = n / d
+						elif '%' in stat:
+							stat = stat.strip('%')
+							self.labeled_stats[label] = float(stat) / 100
+						else:
+							self.labeled_stats[label] = float(stat)
+					else:
 						self.labeled_stats[label] = stat
 
 	def get_fv(self):

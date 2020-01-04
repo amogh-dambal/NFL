@@ -21,12 +21,11 @@ def main():
 	all_seasons = build_seasons(database=database)
 
 	# plot QB efficiency in 2018
-	x_label = 'DYAR'
-	y_label = 'DVOA'
+	x_label = 'DVOA'
+	y_label = 'DYAR'
 
-	X, Y = extract(x_label=x_label, y_label=y_label, seasons=all_seasons)
-
-	graph(x=X, y=Y, x_label=x_label, y_label=y_label)
+	x_, y_ = extract(x_label='DVOA', y_label='DYAR', year=2018, seasons=all_seasons)
+	graph(x=x_, y=y_, x_label=x_label, y_label=y_label)
 
 
 if __name__ == '__main__':

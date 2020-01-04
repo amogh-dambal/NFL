@@ -64,6 +64,8 @@ def merge(f1, f2, index='Player'):
 	joined = pff.join(other=fo.set_index(index), on=index, rsuffix='fo')
 	joined.dropna(inplace=True)
 	joined.drop(columns=[c for c in joined.columns if c.endswith('fo')] + ['Team', 'Yards'], inplace=True)
+	joined.QBrec = [r.split('-')[0] for r in joined.QBrec]
+	joined.rename(columns={'QBrec': 'QBwins'}, inplace=True)
 
 	return joined, year
 
@@ -80,6 +82,12 @@ def build_seasons(database):
 			all_seasons.append(Season(data=row[1], yr=yr, column_names=df.columns[4:]))
 	return all_seasons
 
+def reformat(database):
+	"""
+
+	:param database:
+	:return:
+	"""
 
 # remove extraneous characters
 # and return the last name
