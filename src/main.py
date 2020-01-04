@@ -25,7 +25,15 @@ def main():
 	y_label = 'DYAR'
 
 	x_, y_ = extract(x_label='DVOA', y_label='DYAR', year=2018, seasons=all_seasons)
-	graph(x=x_, y=y_, x_label=x_label, y_label=y_label)
+	params = {
+		'title': 'QB Efficiency, 2018',
+		'color': 'red',
+		'xlabel': 'DVOA',
+		'ylabel': 'DYAR',
+		'season': '2018'
+	}
+
+	graph(x=x_, y=y_, params=params)
 
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@
 from matplotlib import pyplot as plt
 
 
-def graph(x, y, x_label, y_label, params=None):
+def graph(x, y, params=None):
 	"""
 
 	:param x: x-axis data
@@ -16,11 +16,11 @@ def graph(x, y, x_label, y_label, params=None):
 	:return: whether plot was successful
 	"""
 	plt.scatter(x, y, color='darkorange' if params is None else params['color'])
-	plt.xlabel(x_label if params is None else params['xlabel'])
-	plt.ylabel(y_label if params is None else params['ylabel'])
+	plt.xlabel('' if params is None else params['xlabel'])
+	plt.ylabel('' if params is None else params['ylabel'])
 
 	if params is not None:
-		plt.title(f"A Measure of QB Efficiency, {params['season']}")
+		plt.title(f"{params['title']}")
 
 	plt.show()
 
