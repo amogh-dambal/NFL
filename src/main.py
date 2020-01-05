@@ -7,10 +7,11 @@ from preprocess import clean, merge, build_seasons
 from graph import extract, graph
 
 
-def main():
+def setup(directory):
 	# generate database
-	pff_tuples = clean(parse(directory="../data/pff/"), 'PFF')
-	fo_tuples = clean(parse(directory="../data/fo/"), 'FO')
+
+	pff_tuples = clean(parse(directory=directory+"pff/"), 'PFF')
+	fo_tuples = clean(parse(directory=directory+"fo/"), 'FO')
 
 	database = []
 	for pff, fo in zip(pff_tuples, fo_tuples):
@@ -20,13 +21,21 @@ def main():
 	# build individual season records
 	all_seasons = build_seasons(database=database)
 
+	return all_seasons
+
+
+def main():
+
+	seasons = setup("../data/")
+
 	# plot QB efficiency in 2018
 	x_label = 'DVOA'
 	y_label = 'DYAR'
 
-	x_, y_ = extract(x_label='DVOA', y_label='DYAR', year=2018, seasons=all_seasons)
+	year_ = 2017
+	x_, y_ = extract(x_label=x_label, y_label=y_label, year=year_, seasons=seasons)
 	params = {
-		'title': 'QB Efficiency, 2018',
+		'title': f'QB Efficiency, {year_}',
 		'color': 'red',
 		'xlabel': 'DVOA',
 		'ylabel': 'DYAR',
