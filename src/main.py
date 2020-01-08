@@ -28,22 +28,6 @@ def main():
 
 	seasons = setup("../data/")
 
-	# plot QB efficiency in 2018
-	x_label = 'DVOA'
-	y_label = 'DYAR'
-
-	year_ = 2017
-	x_, y_ = extract(x_label=x_label, y_label=y_label, year=year_, seasons=seasons)
-	params = {
-		'title': f'QB Efficiency, {year_}',
-		'color': 'red',
-		'xlabel': 'DVOA',
-		'ylabel': 'DYAR',
-		'season': '2018'
-	}
-
-	graph(x=x_, y=y_, params=params)
-
 
 if __name__ == '__main__':
 	main()

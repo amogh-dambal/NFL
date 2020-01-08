@@ -1,0 +1,24 @@
+g - games played
+gs - games started
+qbwins - games won
+cmp - completions
+att - attempts
+cmp% - completion percentage
+yds - passing yards
+td - touchdowns
+td% - td percentage
+int - interceptions
+int% - interception percentage
+1d -
+lng - long
+y/a - yards per attempt
+ay/a - 
+y/c - yards per completion
+y/g - yards per game
+rate - passer rating
+dpi - defense pass interference calls drawn
+dvoa - defense adjusted value over average
+dyar - defense adjusted yards above replacement
+eyds - effective yards
+alex - air less expected
+
