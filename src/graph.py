@@ -10,8 +10,6 @@ def graph(x, y, params=None):
 
 	:param x: x-axis data
 	:param y: y-axis data
-	:param x_label: the label for the x axis
-	:param y_label: the label for the y axis
 	:param params: dictionary for other graphing settings
 	:return: whether plot was successful
 	"""
