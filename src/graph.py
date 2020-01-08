@@ -7,13 +7,24 @@ from matplotlib import pyplot as plt
 
 def graph(x, y, params=None):
 	"""
-
+	Function to graph the provided data with specified parameters
+	using the pyplot library
 	:param x: x-axis data
 	:param y: y-axis data
-	:param params: dictionary for other graphing settings
+	:param params: dictionary for other graphing settings. supported parameters:
+		xlabel - the label for the x-axis
+		ylabel - the label for the y-axis
+		title - the title for the plot
+		color - the color for the markers
+		marker - the style of the marker
 	:return: whether plot was successful
 	"""
-	plt.scatter(x, y, color='darkorange' if params is None else params['color'])
+	# TODO: write code to label markers
+	plt.scatter(
+		x, y,
+		marker='x' if params is None else params['marker'],
+		color='darkorange' if params is None else params['color']
+	)
 	plt.xlabel('' if params is None else params['xlabel'])
 	plt.ylabel('' if params is None else params['ylabel'])
 
