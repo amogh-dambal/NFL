@@ -1,5 +1,7 @@
 # don't want to include notebooks
 # only for project testing purposes
 
-/notebooks/*.ipynb
+/notebooks/
+venv/
+.idea/
 
