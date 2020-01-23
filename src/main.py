@@ -40,6 +40,7 @@ def main():
 		'ylabel': y_label,
 		'color': color,
 		'title': title,
+		'marker': 'x'
 	}
 
 	graph(x=x, y=y, params=params)
