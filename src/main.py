@@ -30,10 +30,10 @@ def main():
 	x_label = 'ALEX'
 	y_label = 'DVOA'
 	color = 'blue'
-	title = 'Charting QB Efficiency and Aggressiveness, 2018'
-	year = 2018
+	year = 2017
+	title = f'Charting QB Efficiency and Aggressiveness, {year}'
 
-	x, y = extract(x_label=x_label, y_label=y_label, year=year, seasons=seasons)
+	x, y, n = extract(x_label=x_label, y_label=y_label, year=year, seasons=seasons, names=True)
 
 	params = {
 		'xlabel': x_label,
@@ -43,7 +43,7 @@ def main():
 		'marker': 'x'
 	}
 
-	graph(x=x, y=y, params=params)
+	graph(x=x, y=y, n=n, params=params)
 
 
 if __name__ == '__main__':

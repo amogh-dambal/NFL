@@ -5,7 +5,7 @@
 from matplotlib import pyplot as plt
 
 
-def graph(x, y, params=None):
+def graph(x, y, n=[], params=None):
 	"""
 	Function to graph the provided data with specified parameters
 	using the pyplot library
@@ -31,6 +31,10 @@ def graph(x, y, params=None):
 	if params is not None:
 		plt.title(f"{params['title']}")
 
+	if len(n) > 0:
+		for px, py, pname in zip(x, y, n):
+			plt.annotate(s=pname, xy=(px, py))
+
 	plt.grid(True, color='black', linewidth=.1)
 	ax = plt.axes()
 
@@ -45,7 +49,7 @@ def graph(x, y, params=None):
 	plt.show()
 
 
-def extract(x_label, y_label, year, seasons=None, database=None):
+def extract(x_label, y_label, year, seasons=None, database=None, names=False):
 	"""
 
 	:param x_label: label for the x-axis
@@ -53,6 +57,7 @@ def extract(x_label, y_label, year, seasons=None, database=None):
 	:param seasons: list of Season objects to pull from
 	:param database: list of dataframes to pull from
 	:param year: year from which data will be extracted
+	:param names: whether to include the names of the players or not
 	:return: tuple: (X axis data points, Y axis data points)
 	"""
 	if seasons is not None:
@@ -62,13 +67,16 @@ def extract(x_label, y_label, year, seasons=None, database=None):
 			# extract graph data from array of season objects
 			x = []
 			y = []
+			n = []
 			data = [s for s in seasons if s.year == year]
 			print(data)
 			for szn in data:
 				x.append(float(szn.labeled_stats[x_label]))
 				y.append(float(szn.labeled_stats[y_label]))
+				if names:
+					n.append(szn.name)
 
-			return x, y
+			return x, y, n
 	elif database is not None:
 		# extract graph data from array of pandas.DataFrame
 		pass

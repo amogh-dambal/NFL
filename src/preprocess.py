@@ -82,12 +82,6 @@ def build_seasons(database):
 			all_seasons.append(Season(data=row[1], yr=yr, column_names=df.columns[4:]))
 	return all_seasons
 
-def reformat(database):
-	"""
-
-	:param database:
-	:return:
-	"""
 
 # remove extraneous characters
 # and return the last name
